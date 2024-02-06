@@ -1,0 +1,27 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+model UserApiLimit {
+  id String @id @default(cuid())
+  userId String @unique
+  count Int @default(0)
+  createAt DateTime @default(now())
+  update DateTime @updatedAt
+ }
+
+model UserSubscription {
+  id String @id @default(cuid())
+  userId String @unique
+  paypalCustomerId String? @unique @map(name: "customer_id")
+  paypalSubscriptionId String? @map(name: "subscription_id")
+  paypalPriceId String? @map(name: "price_id")
+  paypalCurrentPeriodEnd DateTime? @map(name: "current_period_end")
+}
+
+//tengo que pushear estos cambios a la base de datos
